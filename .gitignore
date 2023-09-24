@@ -8,6 +8,7 @@
 /tmp/
 
 *.gem
+output.txt
 
 # rspec failure tracking
 .rspec_status
