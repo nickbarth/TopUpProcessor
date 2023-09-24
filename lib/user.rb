@@ -1,5 +1,5 @@
 class User
-  attr_reader :tokens
+  attr_reader :first_name, :last_name, :email, :tokens
 
   # Initialize a new User
   def initialize(id:, first_name:, last_name:, email:, tokens:, active_status:, company_id:, email_status:)
@@ -21,11 +21,12 @@ class User
     @active_status = active_status
     @company_id = company_id
     @email_status = email_status
+    @emailed = false
   end
 
-  # Returns the full name of the user
-  def name
-    "#{@first_name} #{@last_name}"
+  # Checks if user was emailed
+  def emailed?
+    @emailed
   end
 
   # Checks if user is active for the given company
@@ -39,8 +40,7 @@ class User
   end
 
   # Sends an email message if user and company allow emails
-  def email_message(company)
-    return "" unless @email_status && company.email_status
-    "Email sent to #{@email}."
+  def send_email(company)
+    @emailed = @email_status && company.email_status
   end
 end

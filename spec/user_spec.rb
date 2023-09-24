@@ -31,12 +31,6 @@ RSpec.describe User do
     end
   end
 
-  describe "#name" do
-    it "returns the full name of the user" do
-      expect(subject.name).to eq("John Doe")
-    end
-  end
-
   describe "#active_for_company?" do
     it "returns true if the user is active for the given company" do
       expect(subject.active_for_company?(company)).to be true
@@ -49,10 +43,11 @@ RSpec.describe User do
     end
   end
 
-  describe "#email_message" do
+  describe "#send_email" do
     context "when email is allowed" do
-      it "returns the email sent message" do
-        expect(subject.email_message(company)).to eq("Email sent to john.doe@example.com.")
+      it "emailed? returns true" do
+        subject.send_email(company)
+        expect(subject.emailed?).to eq(true)
       end
     end
 
@@ -61,8 +56,9 @@ RSpec.describe User do
         allow(company).to receive(:email_status).and_return(false)
       end
 
-      it "returns an empty string" do
-        expect(subject.email_message(company)).to eq("")
+      it "emailed? returns false" do
+        subject.send_email(company)
+        expect(subject.emailed?).to eq(false)
       end
     end
   end
