@@ -37,17 +37,10 @@ RSpec.describe User do
     end
   end
 
-  describe "#top_up" do
-    it "increases the tokens by the given amount" do
-      expect { subject.top_up(50) }.to change { subject.tokens }.from(50).to(100)
-    end
-  end
-
-  describe "#send_email" do
+  describe "#emailable?" do
     context "when email is allowed" do
-      it "emailed? returns true" do
-        subject.send_email(company)
-        expect(subject.emailed?).to eq(true)
+      it "returns true" do
+        expect(subject.emailable?(company)).to eq(true)
       end
     end
 
@@ -56,10 +49,15 @@ RSpec.describe User do
         allow(company).to receive(:email_status).and_return(false)
       end
 
-      it "emailed? returns false" do
-        subject.send_email(company)
-        expect(subject.emailed?).to eq(false)
+      it "returns false" do
+        expect(subject.emailable?(company)).to eq(false)
       end
+    end
+  end
+
+  describe "#top_up" do
+    it "increases the tokens by the given amount" do
+      expect { subject.top_up(50) }.to change { subject.tokens }.from(50).to(100)
     end
   end
 end

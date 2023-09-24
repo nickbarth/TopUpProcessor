@@ -21,12 +21,6 @@ class User
     @active_status = active_status
     @company_id = company_id
     @email_status = email_status
-    @emailed = false
-  end
-
-  # Checks if user was emailed
-  def emailed?
-    @emailed
   end
 
   # Checks if user is active for the given company
@@ -34,13 +28,13 @@ class User
     @active_status && @company_id == company.id
   end
 
+  # Checks if user and company allow emails
+  def emailable?(company)
+    @email_status && company.email_status
+  end
+
   # Tops up user's tokens
   def top_up(amount)
     @tokens += amount
-  end
-
-  # Sends an email message if user and company allow emails
-  def send_email(company)
-    @emailed = @email_status && company.email_status
   end
 end
