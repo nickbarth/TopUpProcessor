@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require_relative "../lib/topup"
-
-TopUp.process(ARGV[0], ARGV[1])

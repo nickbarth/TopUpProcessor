@@ -6,5 +6,5 @@ Usage:
 ```
 git clone https://github.com/nickbarth/TopUpProcessor/
 cd TopUpProcessor
-./bin/process [companies_file.json] [users_file.json] # outputs output.txt
+ruby challenge.rb # outputs output.txt
 ```
