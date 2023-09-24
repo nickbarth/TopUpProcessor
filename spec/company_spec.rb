@@ -29,18 +29,19 @@ RSpec.describe Company do
 
   describe "#process_user" do
     context "when user is active for the company" do
-      it "tops up the user tokens and returns a success message" do
-        allow(user).to receive(:top_up)
-        expected_output = "User: John Doe from TechCorp was topped up with 100 tokens. " \
-                          "Total tokens: 50. Email sent to john.doe@example.com."
-        expect(subject.process_user(user)).to eq(expected_output)
+      it "tops up the user tokens and increases the company total top up" do
+        expect(user).to receive(:top_up).with(100)
+        subject.process_user(user)
+        expect(subject.total_top_up).to eq(100)
       end
     end
 
     context "when user is not active for the company" do
       it "does not process the user" do
         allow(user).to receive(:active_for_company?).and_return(false)
-        expect(subject.process_user(user)).to be_nil
+        expect(user).not_to receive(:top_up)
+        subject.process_user(user)
+        expect(subject.total_top_up).to eq(0)
       end
     end
   end

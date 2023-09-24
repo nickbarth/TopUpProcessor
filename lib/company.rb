@@ -1,5 +1,5 @@
 class Company
-  attr_reader :id, :name, :top_up, :email_status
+  attr_reader :id, :name, :total_top_up, :email_status
 
   # Initialize a new Company
   def initialize(id:, name:, top_up:, email_status:)
@@ -13,15 +13,13 @@ class Company
     @name = name
     @top_up = top_up
     @email_status = email_status
+    @total_top_up = 0
   end
 
   # Processes a user, tops up their tokens if active and associated with the company
   def process_user(user)
     return unless user.active_for_company?(self)
     user.top_up(@top_up)
-
-    "User: #{user.name} from #{@name} was topped up with #{@top_up} tokens. " \
-    "Total tokens: #{user.tokens}. " \
-    "#{user.email_message(self)}"
+    @total_top_up += @top_up
   end
 end
